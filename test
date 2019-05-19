@@ -1,0 +1,12 @@
+
+B=20.0*5;
+C=B+20;
+C=C-40.7;
+D=21;
+E=88.123;
+F=C+E;
+if(C>=100) then print C;
+else 	print "Small";
+	print "END";
+print "TEST";
+endif;
