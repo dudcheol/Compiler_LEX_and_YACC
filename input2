@@ -1,0 +1,10 @@
+A=10*5;
+B=A+20;
+C=B-40.7;
+D=A/5;
+if(C<=20) then print C;
+print "Small";
+else print A;
+     print "BIG";
+     print "END";
+endif;

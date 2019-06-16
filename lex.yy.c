@@ -466,25 +466,30 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "pyc.l"
-#line 2 "pyc.l"
+#line 1 "smartCal.l"
+#line 2 "smartCal.l"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include "y.tab.h"
 #define cnt 26
+
 int i;
 int k;
 double r;
 int id_cnt=0;
+
 struct id_table{
 	char id[10];
 	int val;
 };
+
 struct id_table data[cnt];
 void search_id(char[]);
 int get_val(char[]);
 
-#line 487 "lex.yy.c"
-#line 488 "lex.yy.c"
+#line 492 "lex.yy.c"
+#line 493 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -701,10 +706,10 @@ YY_DECL
 		}
 
 	{
-#line 19 "pyc.l"
+#line 24 "smartCal.l"
 
 
-#line 708 "lex.yy.c"
+#line 713 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -764,139 +769,142 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 21 "pyc.l"
+#line 26 "smartCal.l"
 { printf("");}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 22 "pyc.l"
-{ printf("%s (add)\n", yytext); }
+#line 27 "smartCal.l"
+{ yylval.str = strdup(yytext); return ADD; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 23 "pyc.l"
-{ printf("%s (subtract)\n", yytext); }
+#line 28 "smartCal.l"
+{ yylval.str = strdup(yytext); return MIN; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 24 "pyc.l"
-{ printf("%s (multiply)\n", yytext); }
+#line 29 "smartCal.l"
+{ yylval.str = strdup(yytext); return MUL;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 25 "pyc.l"
-{ printf("%s (divide)\n", yytext); }
+#line 30 "smartCal.l"
+{ yylval.str = strdup(yytext); return DIV; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 26 "pyc.l"
-{ printf("%s (assign)\n", yytext); }
+#line 31 "smartCal.l"
+{ 
+yylval.str = strdup(yytext);
+return ASSIGN; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 27 "pyc.l"
-{ printf("%s (equal)\n", yytext); }
+#line 34 "smartCal.l"
+{yylval.str = strdup(yytext); return EQUAL; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 28 "pyc.l"
-{ printf("%s (not equal)\n", yytext); }
+#line 35 "smartCal.l"
+{ yylval.str = strdup(yytext); return NOT_EQUAL; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 29 "pyc.l"
-{ printf("%s (greater)\n", yytext); }
+#line 36 "smartCal.l"
+{ yylval.str = strdup(yytext); return GREATER; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 30 "pyc.l"
-{ printf("%s (smaller)\n", yytext); }
+#line 37 "smartCal.l"
+{ yylval.str = strdup(yytext); return SMALLER; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 31 "pyc.l"
-{ printf("%s (greater or equal)\n", yytext); }
+#line 38 "smartCal.l"
+{ yylval.str = strdup(yytext); return GREATER_OR_EQUAL; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 32 "pyc.l"
-{ printf("%s (smaller or equal)\n", yytext); }
+#line 39 "smartCal.l"
+{ yylval.str = strdup(yytext); return SMALLER_OR_EQUAL; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 33 "pyc.l"
-{ printf("%s (command end)\n", yytext); }
+#line 40 "smartCal.l"
+{ yylval.str = strdup(yytext); return END; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 34 "pyc.l"
-{ printf("%s (left paren)\n", yytext); }
+#line 41 "smartCal.l"
+{ yylval.str = strdup(yytext); return LEFT_P; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 35 "pyc.l"
-{ printf("%s (right paren)\n", yytext); }
+#line 42 "smartCal.l"
+{ yylval.str = strdup(yytext); return RIGHT_P; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 36 "pyc.l"
-{ printf("%s (keyword %s)\n", yytext,yytext); }
+#line 43 "smartCal.l"
+{ yylval.str = strdup(yytext); return IF; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 37 "pyc.l"
-{ printf("%s (keyword %s)\n", yytext,yytext); }
+#line 44 "smartCal.l"
+{ yylval.str = strdup(yytext); return THEN; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 38 "pyc.l"
-{ printf("%s (keyword %s)\n", yytext,yytext); }
+#line 45 "smartCal.l"
+{ yylval.str = strdup(yytext); return ELSE;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 39 "pyc.l"
-{ printf("%s (keyword %s)\n", yytext,yytext); }
+#line 46 "smartCal.l"
+{ yylval.str = strdup(yytext); return ENDIF;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 40 "pyc.l"
-{ printf("%s (keyword %s)\n", yytext,yytext); }
+#line 47 "smartCal.l"
+{ yylval.str = strdup(yytext); return PRINT; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 42 "pyc.l"
-{ printf("%s (string)\n", yytext); }
+#line 49 "smartCal.l"
+{ yylval.str = strdup(yytext); return STRING; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 44 "pyc.l"
+#line 51 "smartCal.l"
 {
-	search_id(yytext);
-	printf("%s (id, %d)\n", yytext, get_val(yytext));
+search_id(yytext);
+yylval.str = strdup(yytext);
+return ID;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 48 "pyc.l"
+#line 57 "smartCal.l"
 {
-	sscanf(yytext,"%d",&i);
-	printf("%d (real number)\n",i);
+yylval.str = strdup(yytext);
+return NUM;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 52 "pyc.l"
+#line 61 "smartCal.l"
 {
-	sscanf(yytext,"%lf",&r);
-	printf("%lf (real number)\n",r);
+yylval.str = strdup(yytext);
+return DOUBLE_NUM;
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 58 "pyc.l"
+#line 67 "smartCal.l"
 ECHO;
 	YY_BREAK
-#line 900 "lex.yy.c"
+#line 908 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1901,19 +1909,8 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 58 "pyc.l"
+#line 67 "smartCal.l"
 
-
-main()
-{
-	yylex();
-	printf("\n");
-	printf("--Id table\n");
-	for(k=0;k<id_cnt;k++){
-                printf("(%s, %d)\n",data[k].id,data[k].val);
-        }
-
-}
 
 void search_id(char id[]){
         for(k=0;k<cnt;k++){

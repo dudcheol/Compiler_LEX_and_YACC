@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "y.tab.h"
 #define cnt 26
 int i;
 int k;
@@ -19,39 +20,42 @@ int get_val(char[]);
 %%
 
 \n	{ printf("");}
-\+     { printf("%s (add)\n", yytext); }
-\-     { printf("%s (subtract)\n", yytext); }
-\*     { printf("%s (multiply)\n", yytext); }
-\/     { printf("%s (divide)\n", yytext); }
-\=     { printf("%s (assign)\n", yytext); }
-\=\=    { printf("%s (equal)\n", yytext); }
-\!\=    { printf("%s (not equal)\n", yytext); }
-\>     { printf("%s (greater)\n", yytext); }
-\<     { printf("%s (smaller)\n", yytext); }
-\>\=    { printf("%s (greater or equal)\n", yytext); }
-\<\=    { printf("%s (smaller or equal)\n", yytext); }
-\;     { printf("%s (command end)\n", yytext); }
-\(     { printf("%s (left paren)\n", yytext); }
-\)     { printf("%s (right paren)\n", yytext); }
-if	{ printf("%s (keyword %s)\n", yytext,yytext); }
-then	{ printf("%s (keyword %s)\n", yytext,yytext); }
-else	{ printf("%s (keyword %s)\n", yytext,yytext); }
-endif	{ printf("%s (keyword %s)\n", yytext,yytext); }
-print	{ printf("%s (keyword %s)\n", yytext,yytext); }
+\+     { printf("%s (add)\n", yytext); return ADD; }
+\-     { printf("%s (subtract)\n", yytext); return MIN; }
+\*     { printf("%s (multiply)\n", yytext); return MUL;}
+\/     { printf("%s (divide)\n", yytext); return DIV; }
+\=     { printf("%s (assign)\n", yytext); return ASSIGN; }
+\=\=    { printf("%s (equal)\n", yytext); return EQUAL; }
+\!\=    { printf("%s (not equal)\n", yytext); return NOT_EQUAL; }
+\>     { printf("%s (greater)\n", yytext); return GREATER; }
+\<     { printf("%s (smaller)\n", yytext); return SMALLER; }
+\>\=    { printf("%s (greater or equal)\n", yytext); return GREATER_OR_EQUAL; }
+\<\=    { printf("%s (smaller or equal)\n", yytext); return SMALLER_OR_EQUAL; }
+\;     { printf("%s (command end)\n", yytext); return END; }
+\(     { printf("%s (left paren)\n", yytext); return LEFT_P; }
+\)     { printf("%s (right paren)\n", yytext); return RIGHT_P; }
+if	{ printf("%s (keyword %s)\n", yytext,yytext); return IF; }
+then	{ printf("%s (keyword %s)\n", yytext,yytext); return THEN; }
+else	{ printf("%s (keyword %s)\n", yytext,yytext); return ELSE;}
+endif	{ printf("%s (keyword %s)\n", yytext,yytext); return ENDIF;}
+print	{ printf("%s (keyword %s)\n", yytext,yytext); return PRINT; }
 
-(\"([a-zA-Z])*\") { printf("%s (string)\n", yytext); }
+(\"([a-zA-Z])*\") { printf("%s (string)\n", yytext); return STRING; }
 
 [A-Z] {
 	search_id(yytext);
 	printf("%s (id, %d)\n", yytext, get_val(yytext));
+	return ID;
 }
 [0-9]+ {
 	sscanf(yytext,"%d",&i);
 	printf("%d (real number)\n",i);
+	return NUM;
 }
 [0-9]+\.[0-9]+ {
 	sscanf(yytext,"%lf",&r);
 	printf("%lf (real number)\n",r);
+	return NUM;
 }
 
 
@@ -60,12 +64,6 @@ print	{ printf("%s (keyword %s)\n", yytext,yytext); }
 main()
 {
 	yylex();
-	printf("\n");
-	printf("--Id table\n");
-	for(k=0;k<id_cnt;k++){
-                printf("(%s, %d)\n",data[k].id,data[k].val);
-        }
-
 }
 
 void search_id(char id[]){

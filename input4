@@ -1,0 +1,7 @@
+A=20.0-123;
+C=B/20;
+Z=C-401237;
+if(C>=113) then print D;
+else 	print "likeLion";
+	print "haneeum";
+endif;

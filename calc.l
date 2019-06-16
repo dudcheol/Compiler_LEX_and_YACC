@@ -1,23 +1,11 @@
 %{
-
-#include <stdio.h>
-#include "y.tab.h"
-int c;
+#include <stdlib.h>
+#include "calc.tab.h"
+extern int yylval;
 %}
 %%
-" "       ;
-[a-z]     {
-            c = yytext[0];
-            yylval.a = c - 'a';
-            return(LETTER);
-          }
-[0-9]     {
-            c = yytext[0];
-            yylval.a = c - '0';
-            return(DIGIT);
-          }
-[^a-z0-9\b]    {
-                 c = yytext[0];
-                 return(c);
-              }
-%%
+[0-9]+ {yylval = atoi(yytext); return NUMBER;}
+[ \t] ;
+“$” {return 0; /* end of input */ }
+\n |
+. {return(yytext[0]); }
